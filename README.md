@@ -19,4 +19,4 @@ Mensagens personalizadas de status, caso o item esteja "sold out" (esgotado).
 📸 Demonstração
 Uma visão geral da interface do cardápio, incluindo o nome das pizzas, ingredientes e imagens ilustrativas.
 
-![Foto do projeto concluido](./imgs/focaccia.jpg)
+![Foto do projeto concluido](./imgs/card.png)
