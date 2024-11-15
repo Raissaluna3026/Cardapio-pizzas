@@ -8,42 +8,42 @@ const pizzaData = [
       name: "Focaccia",
       ingredients: "Bread with italian olive oil and rosemary",
       price: 6,
-      photoName: "pizzas/focaccia.jpg",
+      photoName: "imgs/focaccia.jpg",
       soldOut: false,
     },
     {
       name: "Pizza Margherita",
       ingredients: "Tomato and mozarella",
       price: 10,
-      photoName: "pizzas/margherita.jpg",
+      photoName: "imgs/margherita.jpg",
       soldOut: false,
     },
     {
       name: "Pizza Spinaci",
       ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
       price: 12,
-      photoName: "pizzas/spinaci.jpg",
+      photoName: "imgs/spinaci.jpg",
       soldOut: false,
     },
     {
       name: "Pizza Funghi",
       ingredients: "Tomato, mozarella, mushrooms, and onion",
       price: 12,
-      photoName: "pizzas/funghi.jpg",
+      photoName: "imgs/funghi.jpg",
       soldOut: false,
     },
     {
       name: "Pizza Salamino",
       ingredients: "Tomato, mozarella, and pepperoni",
       price: 15,
-      photoName: "pizzas/salamino.jpg",
+      photoName: "imgs/salamino.jpg",
       soldOut: true,
     },
     {
       name: "Pizza Prosciutto",
       ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
       price: 18,
-      photoName: "pizzas/prosciutto.jpg",
+      photoName: "imgs/prosciutto.jpg",
       soldOut: false,
     },
   ];
@@ -75,13 +75,29 @@ function Menu(){
  return (
   <main className="menu">
     <h2>Nosso menu</h2>
-    <Pizza 
+
+    <ul className="pizzas">
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} />
+
+          //podemos usar assim tbm
+          // <li className="pizza">
+          // <img src={pizza.photoName} alt={pizza.name} />
+          // <div>
+          //   <h3>{pizza.name}</h3>
+          //   <p>{pizza.ingredients}</p>
+          //   <span>{pizza.price}</span>
+          // </div>
+          // </li>
+        ))}
+    </ul>
+    {/* <Pizza 
     name='Pizza Spicani' 
     ingredients='Tomato, mozarella, spinach, and ricotta cheese' 
     photoName='imgs/spinaci.jpg' 
     price={10}/>
     <Pizza name="Pizza Funghi" ingredients='Tomato, mushrooms'price={12} photoName='imgs/funghi.jpg'/>
-    <Pizza />
+    <Pizza /> */}
   </main>
  )
 
@@ -89,31 +105,37 @@ function Menu(){
 
 function Footer(){
   const hour = new Date().getHours()
-  const openHour = 8;
-  const closeHour = 22;
+  const openHour = 9;
+  const closeHour = 23;
   const isOpen = hour >= openHour && hour <= closeHour;
-  console.log(isOpen)
+  console.log(isOpen);
     
- 
-  return(
-    <footer className="footer">{new Date().toLocaleTimeString()}. "Estamos sempre abertos"</footer>
+  return (
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>
+          Nos estamos abertos até {closeHour}:00
+          </p>
+          <button className="btn">Order</button>
+        </div>
+        
+      )}
+    </footer>
   )
-  
 }
-
-
+ 
 function Pizza(props){
   console.log(props)
     return (
-        <div className="pizza">
-            <img src={props.photoName} alt={props.name} />
+        <li className="pizza">
+            <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
             <div>
-              <h3>{props.name}</h3>
-              <p>{props.ingredients}</p>
-              <span>{props.price + 3}</span>
+              <h3>{props.pizzaObj.name}</h3>
+              <p>{props.pizzaObj.ingredients}</p>
+              <span>{props.pizzaObj.price}</span>
             </div>
-            
-        </div>
+        </li>
     );
 } 
 
