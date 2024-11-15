@@ -160,7 +160,7 @@ function Order({ closeHour, openHour }){
   return (
     <div className="order">
       <p>
-        Nos estamos abertos de {openHour} até {closeHour}:00. Nos visite online
+        Nós estamos abertos de {openHour} até {closeHour}:00. Nos visite online!
       </p>
       <button className="btn">Order</button>
     </div>
