@@ -72,25 +72,32 @@ function Header(){
 }
 
 function Menu(){
+  const pizzas = pizzaData;
+  //const pizzas = [];
+  const numPizzas = pizzas.length;
+
  return (
   <main className="menu">
     <h2>Nosso menu</h2>
 
-    <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
+    
 
-          //podemos usar assim tbm
-          // <li className="pizza">
-          // <img src={pizza.photoName} alt={pizza.name} />
-          // <div>
-          //   <h3>{pizza.name}</h3>
-          //   <p>{pizza.ingredients}</p>
-          //   <span>{pizza.price}</span>
-          // </div>
-          // </li>
-        ))}
-    </ul>
+    {numPizzas > 0 ? (
+      < >
+        <p>
+          Autentica cozinha italiana. 6 pratos criativos para escolher. Tudo feito no forno de pedra, organic and delicious. 
+        </p>
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      </>
+
+      
+    ): <p>Ainda estamos trabalhando no cardapio. Por favor, entre em contato posteriormente, obrigada!</p>}
+
+    
     {/* <Pizza 
     name='Pizza Spicani' 
     ingredients='Tomato, mozarella, spinach, and ricotta cheese' 
@@ -105,39 +112,60 @@ function Menu(){
 
 function Footer(){
   const hour = new Date().getHours()
-  const openHour = 9;
-  const closeHour = 23;
-  const isOpen = hour >= openHour && hour <= closeHour;
+  const openHour = 8;
+  const closeHour = 2;
+  const isOpen = (hour >= openHour && hour < 24) || (hour >= 0 && hour < closeHour);
   console.log(isOpen);
     
+  if(!isOpen)
+    return(
+      <p>Nós estamos abertos entre {openHour}:00 e {closeHour}:00</p>
+    )
+
   return (
     <footer className="footer">
-      {isOpen && (
-        <div className="order">
-          <p>
-          Nos estamos abertos até {closeHour}:00
-          </p>
-          <button className="btn">Order</button>
-        </div>
-        
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour}/>
+      ) : (
+        <p>Nós estamos abertos entre {openHour}:00 e {closeHour}:00</p>
       )}
     </footer>
   )
 }
  
-function Pizza(props){
-  console.log(props)
+function Pizza({ pizzaObj }){
+  console.log(pizzaObj)
+
+  //if(pizzaObj.soldOut)return null;
     return (
-        <li className="pizza">
-            <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+        <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+            <img src={pizzaObj.photoName} alt={pizzaObj.name} />
             <div>
-              <h3>{props.pizzaObj.name}</h3>
-              <p>{props.pizzaObj.ingredients}</p>
-              <span>{props.pizzaObj.price}</span>
+              <h3>{pizzaObj.name}</h3>
+              <p>{pizzaObj.ingredients}</p>
+
+              {/* {pizzaObj.soldOut ?(
+                <span>SOLD OUT</span>
+              ) : (
+              <span>{pizzaObj.price}</span>
+            )} */}
+
+              <span>{pizzaObj.soldOut ? "SOULD OUT" : pizzaObj.price}</span>
             </div>
         </li>
     );
 } 
+
+function Order({ closeHour, openHour }){
+  return (
+    <div className="order">
+      <p>
+        Nos estamos abertos de {openHour} até {closeHour}:00. Nos visite online
+      </p>
+      <button className="btn">Order</button>
+    </div>
+  )
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
